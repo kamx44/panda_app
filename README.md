@@ -1,6 +1,6 @@
 # panda_application
 W tym repozytorium znajdziecie pliki źródłowe aplikacji pozwalające na powrócenie do wybranego etapu pracy podczas kursu DevOps Core.
-
+111
 ## Galezie 
 
 |Galaz  | Blok  | Opis  | 
