@@ -34,7 +34,7 @@ public class PandaApplicationSeleniumTest {
 
         // Pamiętaj, że aplikacja Spring musi działać!
         //driver.get(String.format("http://ubuntuslave:%s", port));
-        driver.get(String.format("http://ubuntuslave:%s", port));
+        driver.get(String.format("http://ubuntu:%s", port));
 
         //Czekamy 2 sekundy
         Thread.sleep(2000);
