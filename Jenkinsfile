@@ -7,6 +7,11 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
     }
+    
+    environment{
+		IMAGE = readMavenPom().getArtifactId()
+		VERSION = readMavenPom().getVersion()
+	}
 
     stages {
         
@@ -27,7 +32,7 @@ pipeline {
 		}
 		stage('Start application'){
 			steps {
-				sh "docker run -d --name pandaapp -p 0.0.0.0:8080:8080 -t ${IMAGE}.{VERSION}"
+				sh "docker run -d --name pandaapp -p 0.0.0.0:8080:8080 -t ${IMAGE}:${VERSION}"
 			}
 		}
 		stage('Selenium test'){
@@ -45,11 +50,9 @@ pipeline {
     }
 		
     post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
         always {
             sh "docker stop pandaapp"
-            unit '**/target/surefire-reports/TEST-*.xml'
+            junit '**/target/surefire-reports/TEST-*.xml'
             archiveArtifacts 'target/*.jar'
             deleteDir()
         }
