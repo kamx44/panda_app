@@ -11,10 +11,18 @@ pipeline {
     environment{
 		IMAGE = readMavenPom().getArtifactId()
 		VERSION = readMavenPom().getVersion()
+		ANSIBLE = tool name: 'Ansible', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
 	}
 
+	
+
     stages {
-        
+        stage('Test installation') {
+			steps {
+				sh 'terraform version'
+				sh 'ansible version'
+			}
+		}
         stage('Cleaning app'){
 			steps {
 				sh "docker rm -f pandaapp || true"
@@ -47,6 +55,27 @@ pipeline {
                 }
 			}
 		}
+		stage('Run terraform') {
+			steps {
+				dir('infrastructure/terraform') { 
+				sh 'terraform init && terraform apply -auto-approve -var-file example.tfvars'
+				} 
+			}
+		}
+		stage('Copy Ansible role') {
+			steps {
+				sh 'cp -R infrastructure/ansible/panda/ /etc/ansible/roles/'
+			}
+		}
+		stage('Run Ansible') {
+			steps {
+				dir('infrastructure/ansible') { 
+				sh 'chmod 600 ../panda.pem'
+				sh 'ansible-playbook -i ./inventory playbook.yml'
+				} 
+			}
+		}
+		
     }
 		
     post {
