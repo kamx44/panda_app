@@ -6,6 +6,7 @@ pipeline {
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
+		terraform 'Terraform'
     }
     
     environment{
@@ -19,8 +20,8 @@ pipeline {
     stages {
         stage('Test installation') {
 			steps {
-				sh 'terraform version'
-				sh 'ansible version'
+				sh 'terraform --version'
+				sh 'ansible --version'
 			}
 		}
         stage('Cleaning app'){
