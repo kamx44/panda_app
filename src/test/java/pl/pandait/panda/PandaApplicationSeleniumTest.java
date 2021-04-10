@@ -35,7 +35,7 @@ public class PandaApplicationSeleniumTest {
         driver = new RemoteWebDriver(new URL("http://selenium-hub:4444/wd/hub"), capabilities);
 
         // Pamiętaj, że aplikacja Spring musi działać!
-        driver.get(String.format("http://jenkins:%s", port));
+        driver.get(String.format("http://slave:%s", port));
 
         //Czekamy 2 sekundy
         Thread.sleep(2000);
