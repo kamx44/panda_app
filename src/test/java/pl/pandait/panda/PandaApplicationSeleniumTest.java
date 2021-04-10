@@ -28,8 +28,10 @@ public class PandaApplicationSeleniumTest {
     @BeforeEach
     public void startup() throws InterruptedException, MalformedURLException { 
 
-        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-        capabilities.setPlatform(Platform.LINUX);
+        //DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        //capabilities.setPlatform(Platform.LINUX);
+        FirefoxOptions capabilities = new FirefoxOptions();
+        capabilities.setCapability("marionette", true);
         driver = new RemoteWebDriver(new URL("http://192.168.33.33:4444/wd/hub"), capabilities);
 
         // Pamiętaj, że aplikacja Spring musi działać!
