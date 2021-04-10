@@ -32,7 +32,7 @@ public class PandaApplicationSeleniumTest {
         //capabilities.setPlatform(Platform.LINUX);
         FirefoxOptions capabilities = new FirefoxOptions();
         capabilities.setCapability("marionette", true);
-        driver = new RemoteWebDriver(new URL("http://jenkins:4444/wd/hub"), capabilities);
+        driver = new RemoteWebDriver(new URL("http://selenium-hub:4444/wd/hub"), capabilities);
 
         // Pamiętaj, że aplikacja Spring musi działać!
         driver.get(String.format("http://jenkins:%s", port));
